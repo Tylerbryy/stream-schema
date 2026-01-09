@@ -24,6 +24,13 @@ Current solutions require you to either:
 ## Installation
 
 ```bash
+# Recommended
+bun add stream-schema
+
+# Or with pnpm
+pnpm add stream-schema
+
+# Or with npm
 npm install stream-schema
 ```
 
