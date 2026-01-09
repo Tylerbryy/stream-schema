@@ -1,6 +1,6 @@
 {
   "name": "stream-schema",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Streaming JSON parser with incremental schema validation - perfect for LLM outputs",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
