@@ -422,7 +422,8 @@ export class StreamingJSONParser<T extends JSONSchema = JSONSchema> implements S
       return;
     }
 
-    const path = this.getCurrentPath();
+    // Include current key from parent to get the path where this object lives
+    const path = this.getCurrentPath(true);
     const schema = this.validator?.getSchemaAtPath(path);
 
     // Early type validation
@@ -455,7 +456,8 @@ export class StreamingJSONParser<T extends JSONSchema = JSONSchema> implements S
       return;
     }
 
-    const path = this.getCurrentPath();
+    // After popping, include parent's currentKey to get the path where this object lived
+    const path = this.getCurrentPath(true);
     const pathStr = path.join('.');
 
     // Mark as complete
@@ -486,7 +488,8 @@ export class StreamingJSONParser<T extends JSONSchema = JSONSchema> implements S
       return;
     }
 
-    const path = this.getCurrentPath();
+    // Include current key from parent to get the path where this array lives
+    const path = this.getCurrentPath(true);
     const schema = this.validator?.getSchemaAtPath(path);
 
     // Early type validation
@@ -519,7 +522,8 @@ export class StreamingJSONParser<T extends JSONSchema = JSONSchema> implements S
       return;
     }
 
-    const path = this.getCurrentPath();
+    // After popping, include parent's currentKey to get the path where this array lived
+    const path = this.getCurrentPath(true);
     const pathStr = path.join('.');
 
     // Mark as complete
@@ -584,7 +588,8 @@ export class StreamingJSONParser<T extends JSONSchema = JSONSchema> implements S
       return;
     }
 
-    const path = [...this.getCurrentPath(), String(frame.arrayIndex)];
+    // getCurrentPath already includes arrayIndex for array frames
+    const path = this.getCurrentPath();
     const pathStr = path.join('.');
 
     (frame.data as unknown[]).push(value);

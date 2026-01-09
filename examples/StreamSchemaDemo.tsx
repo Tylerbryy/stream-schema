@@ -83,7 +83,6 @@ const DEMO_SCENARIOS = {
 
 type ScenarioKey = keyof typeof DEMO_SCENARIOS
 
-// Create chunks to simulate streaming (irregular sizes like real network)
 function createStreamChunks(json: string): string[] {
   const chunks: string[] = []
   const chunkSizes = [3, 5, 2, 8, 4, 6, 3, 7, 2, 5, 4, 9, 3, 6, 8, 4, 5, 2, 7, 3]
@@ -124,7 +123,6 @@ export function StreamSchemaDemo() {
     const chunks = createStreamChunks(scenario.json)
     const isLLMMode = "isLLMMode" in scenario && scenario.isLLMMode
 
-    // Create the REAL stream-schema parser
     const collectedErrors: string[] = []
 
     parserRef.current = isLLMMode
@@ -170,7 +168,6 @@ export function StreamSchemaDemo() {
 
       const chunk = chunks[chunkIndex]!
 
-      // Feed chunk to the REAL stream-schema parser
       const result: ParseResult<unknown> = parserRef.current.feed(chunk)
 
       setState((prev) => ({
@@ -221,7 +218,6 @@ export function StreamSchemaDemo() {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
-      {/* Header */}
       <div className="text-center mb-12">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 text-sm font-medium mb-4">
           <Zap className="w-4 h-4" />
@@ -235,7 +231,6 @@ export function StreamSchemaDemo() {
         </p>
       </div>
 
-      {/* Features */}
       <div className="grid md:grid-cols-3 gap-4 mb-8">
         <Card className="border-border/50">
           <CardContent className="pt-6">
@@ -278,7 +273,6 @@ export function StreamSchemaDemo() {
         </Card>
       </div>
 
-      {/* Demo Tabs */}
       <Tabs
         value={activeScenario}
         onValueChange={(v) => {
@@ -296,7 +290,6 @@ export function StreamSchemaDemo() {
         </TabsList>
       </Tabs>
 
-      {/* Controls */}
       <div className="flex items-center justify-center gap-4 mb-8">
         <Button
           onClick={startStreaming}
@@ -313,9 +306,7 @@ export function StreamSchemaDemo() {
         </Button>
       </div>
 
-      {/* Main Demo Area */}
       <div className="grid lg:grid-cols-2 gap-6">
-        {/* Left: Input Stream */}
         <Card className="border-border/50">
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
@@ -340,7 +331,6 @@ export function StreamSchemaDemo() {
             </div>
           </CardHeader>
           <CardContent>
-            {/* Raw Stream */}
             <div className="bg-muted/50 rounded-lg p-4 font-mono text-sm min-h-[120px] mb-4 overflow-x-auto">
               {state.displayedChunks.length > 0 ? (
                 <span>
@@ -359,7 +349,6 @@ export function StreamSchemaDemo() {
               )}
             </div>
 
-            {/* Stats */}
             <div className="flex items-center gap-4 text-sm text-muted-foreground">
               <span>{state.bytesProcessed} bytes processed</span>
               <span>•</span>
@@ -368,14 +357,12 @@ export function StreamSchemaDemo() {
           </CardContent>
         </Card>
 
-        {/* Right: Parsed Output */}
         <Card className="border-border/50">
           <CardHeader className="pb-3">
             <CardTitle className="text-lg">Parsed Output</CardTitle>
             <CardDescription>Real-time partial results from stream-schema</CardDescription>
           </CardHeader>
           <CardContent>
-            {/* Parsed Data */}
             <div className="bg-muted/50 rounded-lg p-4 font-mono text-sm min-h-[120px] mb-4">
               {Object.keys(state.partialData).length > 0 ? (
                 <pre className="whitespace-pre-wrap">{JSON.stringify(state.partialData, null, 2)}</pre>
@@ -384,7 +371,6 @@ export function StreamSchemaDemo() {
               )}
             </div>
 
-            {/* Field Status */}
             <div className="space-y-3">
               {state.completedFields.length > 0 && (
                 <div className="flex flex-wrap gap-2">
@@ -405,7 +391,7 @@ export function StreamSchemaDemo() {
                   <span className="text-sm text-muted-foreground">Pending:</span>
                   {state.pendingFields.map((field) => (
                     <Badge key={field} variant="secondary" className="gap-1">
-                      <Clock className="w-3 h-3" />
+                      <Clock className="w-3 h-3 shrink-0" />
                       {field}
                     </Badge>
                   ))}
@@ -430,7 +416,6 @@ export function StreamSchemaDemo() {
         </Card>
       </div>
 
-      {/* Schema Display */}
       <Card className="mt-6 border-border/50">
         <CardHeader className="pb-3">
           <CardTitle className="text-lg">Schema Definition</CardTitle>
@@ -450,7 +435,6 @@ export function StreamSchemaDemo() {
         </CardContent>
       </Card>
 
-      {/* Code Example */}
       <Card className="mt-6 border-border/50">
         <CardHeader className="pb-3">
           <CardTitle className="text-lg">Usage Example</CardTitle>
